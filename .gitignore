@@ -1,0 +1,15 @@
+# Ignore all logfiles and tempfiles.
+/log/*
+!/log/.keep
+/vendor
+/tmp
+
+tags
+
+# ~ files
+*.*~
+
+inventaire_patrimoine.json
+inventaire_patrimoine.ppsv
+allo.tsv
+final.tsv

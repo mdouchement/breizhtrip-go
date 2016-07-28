@@ -1,0 +1,13 @@
+hash: e08ad46a24ea8baefc79523517f9bd576faeec0d8e193abd314b35ebdcd044bc
+updated: 2016-07-28T19:40:52.227567823+02:00
+imports:
+- name: github.com/caarlos0/env
+  version: 65331f179c42e3ffe33457b69bee55472a779cd6
+- name: github.com/gin-gonic/gin
+  version: e2fa89777e344782ef5d31929f095f4589c35dcc
+- name: github.com/Sirupsen/logrus
+  version: 4b6ea7319e214d98c938f12692336f7ca9348d6b
+- name: github.com/x-cray/logrus-prefixed-formatter
+  version: 78e945f7d6bfe5a81ce6121d92d8118e44303e58
+- name: gopkg.in/urfave/cli.v1
+testImports: []

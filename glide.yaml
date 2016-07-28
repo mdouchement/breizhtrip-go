@@ -1,0 +1,11 @@
+package: github.com/mdouchement/breizhtrip-go
+import:
+- package: github.com/Sirupsen/logrus
+  version: ~0.10.0
+- package: github.com/caarlos0/env
+  version: ~2.0.0
+- package: github.com/gin-gonic/gin
+  version: ~0.6.0
+- package: github.com/x-cray/logrus-prefixed-formatter
+- package: gopkg.in/urfave/cli.v1
+  version: ~1.18.0
