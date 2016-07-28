@@ -1,13 +1,31 @@
-hash: e08ad46a24ea8baefc79523517f9bd576faeec0d8e193abd314b35ebdcd044bc
-updated: 2016-07-28T19:40:52.227567823+02:00
+hash: 31eb8a5db92e3ba7ab3c33546e05217dd9f145e475d4cb4d7ff4c35e72b88a07
+updated: 2016-07-28T20:53:47.423564723+02:00
 imports:
 - name: github.com/caarlos0/env
   version: 65331f179c42e3ffe33457b69bee55472a779cd6
 - name: github.com/gin-gonic/gin
-  version: e2fa89777e344782ef5d31929f095f4589c35dcc
+  version: 542be2fe77724f800fcab7eb6c01a4e597fb8506
+  subpackages:
+  - binding
+  - render
+- name: github.com/manucorporat/sse
+  version: ee05b128a739a0fb76c7ebd3ae4810c1de808d6d
+- name: gopkg.in/go-playground/validator.v8
+  version: c193cecd124b5cc722d7ee5538e945bdb3348435
+- name: github.com/julienschmidt/httprouter
+  version: b428fda53bb0a764fea9c76c9413512eda291dec
+- name: github.com/mattn/go-colorable
+  version: 9056b7a9f2d1f2d96498d6d146acd1f9d5ed3d59
+- name: github.com/mattn/go-isatty
+  version: 56b76bdf51f7708750eac80fa38b952bb9f32639
 - name: github.com/Sirupsen/logrus
   version: 4b6ea7319e214d98c938f12692336f7ca9348d6b
 - name: github.com/x-cray/logrus-prefixed-formatter
   version: 78e945f7d6bfe5a81ce6121d92d8118e44303e58
-- name: gopkg.in/urfave/cli.v1
+- name: golang.org/x/sys
+  version: a646d33e2ee3172a661fc09bca23bb4889a41bc8
+  subpackages:
+  - unix
+- name: gopkg.in/urfave/cli.v2
+  version: ee2e8aa5b22f55f006c27fd35765c62249a39aad
 testImports: []

@@ -3,20 +3,20 @@ package main
 import (
 	"os"
 
-	"github.com/PredicSis/mp_license_authority_go/config"
-	"github.com/PredicSis/mp_license_authority_go/web"
-	"gopkg.in/urfave/cli.v1"
+	"github.com/mdouchement/breizhtrip-go/config"
+	"github.com/mdouchement/breizhtrip-go/web"
+	"gopkg.in/urfave/cli.v2"
 )
 
 var app *cli.App
 
 func init() {
-	app = cli.NewApp()
+	app = &cli.App{}
 	app.Name = "BreizhTrip"
 	app.Version = config.Cfg.Version
 	app.Usage = ""
 
-	app.Commands = []cli.Command{
+	app.Commands = []*cli.Command{
 		web.ServerCommand,
 	}
 }
