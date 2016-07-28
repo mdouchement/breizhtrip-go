@@ -22,7 +22,7 @@ $ glide install
 - **development**
 
 ```bash
-$ go run breizhtrip.go -p 5000
+$ go run breizhtrip.go server -p 5000
 
 # Before pushing to Github
 $ find . -name '*.go' -not -path './vendor*' -exec go fmt {} \;
