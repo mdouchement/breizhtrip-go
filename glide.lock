@@ -12,6 +12,19 @@ imports:
   version: ee05b128a739a0fb76c7ebd3ae4810c1de808d6d
 - name: gopkg.in/go-playground/validator.v8
   version: c193cecd124b5cc722d7ee5538e945bdb3348435
+- name: github.com/golang/protobuf
+  version: 2402d76f3d41f928c7902a765dfc872356dd3aad
+  subpackages:
+  - proto
+- name: github.com/mgutz/ansi
+  version: c286dcecd19ff979eeb73ea444e479b903f2cfcb
+- name: golang.org/x/net
+  version: f315505cf3349909cdf013ea56690da34e96a451
+  subpackages:
+  - context
+  - proxy
+- name: gopkg.in/yaml.v2
+  version: a83829b6f1293c91addabc89d0571c246397bbf4
 - name: github.com/julienschmidt/httprouter
   version: b428fda53bb0a764fea9c76c9413512eda291dec
 - name: github.com/mattn/go-colorable
