@@ -45,8 +45,12 @@ func GinEngine() *gin.Engine {
 	engine.Use(middlewares.DefaultGinrus())
 	engine.Use(middlewares.ParamsConverter())
 
+	engine.LoadHTMLGlob("views/*")
+
 	router := engine.Group("/")
 
+	router.Static("/public", "public")
+	router.GET("/", controllers.IndexHome)
 	router.GET("/version", controllers.ShowVersion)
 	// middlewares.CRUD(router, "/system_informations", controllers.NewSystemInformations())
 	// middlewares.CRUD(router, "/licenses", controllers.NewLicenses())
