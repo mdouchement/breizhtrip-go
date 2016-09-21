@@ -12,6 +12,12 @@ var Cfg *Config
 // Config holds all configuration for our program
 type Config struct {
 	Version string `env:"APP_VERSION"`
+
+	DatabasePool     int    `env:"BREIZHTRIP_DATABASE_POOL" envDefault:"20"`
+	DatabaseHost     string `env:"BREIZHTRIP_DATABASE_HOST" envDefault:"localhost"`
+	DatabasePort     string `env:"BREIZHTRIP_DATABASE_PORT" envDefault:"5432"`
+	DatabaseUsername string `env:"BREIZHTRIP_DATABASE_USERNAME" envDefault:"postgres"`
+	DatabasePassword string `env:"BREIZHTRIP_DATABASE_PASSWORD" envDefault:"postgres"`
 }
 
 func init() {
