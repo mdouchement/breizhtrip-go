@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/satori/go.uuid"
@@ -27,8 +28,17 @@ type Heritage struct {
 }
 
 // NewHeritage returns new Heritage with a default id.
-func NewHeritage() *Heritage {
-	return &Heritage{
-		ID: uuid.NewV4().String(),
+func NewHeritage(id ...string) *Heritage {
+	switch len(id) {
+	case 0:
+		return &Heritage{
+			ID: uuid.NewV4().String(),
+		}
+	case 1:
+		return &Heritage{
+			ID: id[0],
+		}
+	default:
+		panic(fmt.Errorf("Heritage: Invalid number of arguments %d for 0..1", len(id)))
 	}
 }

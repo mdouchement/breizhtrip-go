@@ -41,3 +41,9 @@ func version() string {
 	version.Write(commit)
 	return string(bytes.Replace(version.Bytes(), []byte("\n"), []byte{}, -1))
 }
+
+func check(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
