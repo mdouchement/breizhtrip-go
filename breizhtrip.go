@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/mdouchement/breizhtrip-go/config"
+	"github.com/mdouchement/breizhtrip-go/models"
 	"github.com/mdouchement/breizhtrip-go/web"
 	"gopkg.in/urfave/cli.v2"
 )
@@ -22,6 +23,8 @@ func init() {
 }
 
 func main() {
+	config.InitDB()
+	models.AutoMigration()
 	err := app.Run(os.Args)
 	if err != nil {
 		println(err)
