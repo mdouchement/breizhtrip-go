@@ -9,7 +9,14 @@ tags
 # ~ files
 *.*~
 
+# Datafiles
 inventaire_patrimoine.json
 inventaire_patrimoine.ppsv
 allo.tsv
 final.tsv
+
+# Front
+node_modules
+
+# Config files
+.ruby-version

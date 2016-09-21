@@ -1,0 +1,65 @@
+// 1. Initial variables
+
+// Colors
+$black: #111 !default;
+$grey-darker: #222324 !default;
+$grey-dark: #69707a !default;
+$grey: #aeb1b5 !default;
+$grey-light: #d3d6db !default;
+$grey-lighter: #f5f7fa !default;
+$white: #fff !default;
+$blue: #42afe3 !default;
+$green: #97cd76 !default;
+$orange: #f68b39 !default;
+$purple: #847bb9 !default;
+$red: #ed6c63 !default;
+$turquoise: #1fc8db !default;
+$yellow: #fce473 !default;
+
+// Typography
+$family-sans-serif: 'Open Sans', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif !default;
+$family-monospace: 'Source Code Pro', 'Monaco', 'Inconsolata', monospace !default;
+
+// 2. Primary colors
+$primary: $turquoise !default;
+$info: $blue !default;
+$success: $green !default;
+$warning: $yellow !default;
+$danger: $red !default;
+$light: $grey-lighter !default;
+$dark: $grey-dark !default;
+$text: $grey-dark !default;
+
+// 3. Generated variables
+
+// General colors
+$body-background: $grey-lighter !default;
+$background: $grey-lighter !default;
+$border: $grey-light !default;
+$border-hover: $grey !default;
+
+// Text colors
+$text-invert: find-color-invert($text) !default;
+$text-light: $grey !default;
+$text-strong: $grey-darker !default;
+
+// Link colors
+$link: $primary !default;
+$link-invert: $primary-invert !default;
+$link-visited: $purple !default;
+$link-hover: $grey-darker !default;
+$link-hover-background: $grey-lighter !default;
+$link-hover-border: $grey-darker !default;
+$link-active: $grey-darker !default;
+$link-active-border: $grey-darker !default;
+
+// Control colors
+$control: $text-strong !default;
+$control-background: $text-invert !default;
+$control-border: $border !default;
+$control-hover: $link-hover !default;
+$control-hover-border: $border-hover !default;
+$control-active: $link !default;
+$control-active-background: $link !default;
+$control-active-background-invert: $link-invert !default;
+$control-active-border: $link !default;
