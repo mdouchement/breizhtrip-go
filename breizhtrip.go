@@ -1,9 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/mdouchement/breizhtrip-go/config"
+	"github.com/mdouchement/breizhtrip-go/imports"
 	"github.com/mdouchement/breizhtrip-go/models"
 	"github.com/mdouchement/breizhtrip-go/web"
 	"gopkg.in/urfave/cli.v2"
@@ -19,6 +21,7 @@ func init() {
 
 	app.Commands = []*cli.Command{
 		web.ServerCommand,
+		imports.Command,
 	}
 }
 
@@ -27,6 +30,6 @@ func main() {
 	models.AutoMigration()
 	err := app.Run(os.Args)
 	if err != nil {
-		println(err)
+		fmt.Println(err)
 	}
 }
