@@ -15,7 +15,8 @@ var gulp     = require('gulp'),
 function handleErrors() {
   var args = Array.prototype.slice.call(arguments);
   notify.onError({
-    title: 'Error: <%= error.message %>'
+    title: '<%= error.plugin %> failed',
+    message: '<%= error.message %>'
   }).apply(this, args);
   gutil.beep();
   this.emit('end');
@@ -25,17 +26,11 @@ gulp.task('sass', function() {
   return gulp.src('./assets/stylesheets/main.scss')
     .pipe(plumber({ errorHandler: handleErrors }))
     .pipe(sourcemaps.init())
-    .pipe(sass({
-       errLogToConsole: true,
-       outputStyle: 'expanded',
-       includePaths: ['./assets/stylesheets', './node_modules/bulma']
-     }))
+    .pipe(sass())
     .pipe(autoprefix({
-      browsers: ['last 2 versions', 'ie >= 9', 'and_chr >= 2.3']
+      browsers: ['last 2 versions', 'ie >= 9']
     }))
-    .pipe(cssnano({
-        safe: true // Use safe optimizations.
-     }))
+    .pipe(cssnano())
     .pipe(sourcemaps.write("."))
     .pipe(rename('style.min.css'))
     .pipe(gulp.dest('public/assets/stylesheets/'))
@@ -48,7 +43,7 @@ gulp.task('js', function() {
     .pipe(sourcemaps.init())
     .pipe(babel())
     .pipe(concat('javascript.js'))
-    // .pipe(uglify())
+    .pipe(uglify())
     .pipe(sourcemaps.write("."))
     .pipe(rename('javascript.min.js'))
     .pipe(gulp.dest('public/assets/javascripts/'))
