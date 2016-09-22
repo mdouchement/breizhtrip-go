@@ -4,7 +4,7 @@
 /vendor
 /tmp
 
-tags
+.tags*
 
 # ~ files
 *.*~
