@@ -36,6 +36,20 @@ $ find . -name '*.go' -not -path './vendor*' -exec go fmt {} \;
 $ go run breizhtrip.go import -i /path/to/your/file.tsv
 ```
 
+The TSV must include these columns header:
+* longitude
+* latitude
+* adresse
+* commune
+* lieu_dit
+* datations_principales
+* datations_secondaires
+* statut
+* cadre_etude
+* date_enquete
+* denomination
+* phase
+
 ## License
 
 MIT. See the [LICENSE](https://github.com/mdouchement/breizhtrip-go/blob/master/LICENSE) for more details.

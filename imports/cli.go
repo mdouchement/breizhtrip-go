@@ -70,8 +70,7 @@ func action(context *cli.Context) error {
 			h.LieuDit = record[header["lieu_dit"]]
 			h.Datings = models.NewStringSlice(record[header["datations_principales"]], record[header["datations_secondaires"]])
 			h.Status = record[header["statut"]]
-			h.Study = record[header["cadre_etude"]]
-			h.Study = record[header["cadre_etude"]]
+			h.Study = record[header["cadre_etude"]
 			h.StudyAt = record[header["date_enquete"]]
 			h.Names = models.NewStringSlice(splitNames(record[header["denomination"]])...)
 			h.Phase = record[header["phase"]]
