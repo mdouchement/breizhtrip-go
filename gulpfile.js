@@ -28,7 +28,7 @@ gulp.task('sass', function() {
     .pipe(sass({
        errLogToConsole: true,
        outputStyle: 'expanded',
-       includePaths: ['./assets/stylesheets']
+       includePaths: ['./assets/stylesheets', './node_modules/bulma']
      }))
     .pipe(autoprefix({
       browsers: ['last 2 versions', 'ie >= 9', 'and_chr >= 2.3']

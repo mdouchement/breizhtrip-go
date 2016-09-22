@@ -4,6 +4,7 @@
   "description": "Carte interactive pour découvrir le patrimoine breton recensé Interactive map to discover listed breton heritage",
   "main": "",
   "dependencies": {
+    "bulma": "^0.1.2",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
     "gulp-babel": "^6.1.2",
