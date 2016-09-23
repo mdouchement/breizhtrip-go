@@ -14,7 +14,26 @@ var gulp     = require('gulp'),
   uglify     = require('gulp-uglify'),
   gutil      = require('gulp-util'),
   babel      = require('gulp-babel'),
+  child      = require('child_process'),
+  sync       = require('gulp-sync')(gulp),
   sass       = require('gulp-sass');
+
+/* ----------------------------------------------------------------------------
+ * locals
+ * ------------------------------------------------------------------------- */
+
+var server = null,
+  assetSrc = 'assets/',
+  assetDist = 'public/assets/',
+  stylesheetsSrc = assetSrc + 'stylesheets/**/*',
+  stylesheetsDist = assetDist + 'stylesheets',
+  javascriptsSrc = assetSrc + 'javascripts/**/*',
+  javascriptsDist = assetDist + 'javascripts',
+  viewSrc = 'views/**/*.tmpl';
+
+/* ----------------------------------------------------------------------------
+ * Functions
+ * ------------------------------------------------------------------------- */
 
 function handleErrors() {
   var args = Array.prototype.slice.call(arguments);
@@ -26,44 +45,133 @@ function handleErrors() {
   this.emit('end');
 }
 
-gulp.task('sass', function() {
-  return gulp.src('assets/stylesheets/main.scss')
+/* ----------------------------------------------------------------------------
+ * Assets
+ * ------------------------------------------------------------------------- */
+
+gulp.task('assets:stylesheets', function() {
+  return gulp.src(assetSrc + 'stylesheets/main.scss')
     .pipe(plumber({ errorHandler: handleErrors }))
     .pipe(sourcemaps.init())
-    .pipe(cached('sass'))
+    .pipe(cached('assets:stylesheets'))
     .pipe(sass({ includePaths: ['./node_modules/bulma'] }))
-    .pipe(autoprefix({
-      browsers: ['last 2 versions', 'ie >= 9']
-    }))
+    .pipe(autoprefix({ browsers: ['last 2 versions'] }))
     .pipe(cssnano())
-    .pipe(remember('sass'))
+    .pipe(remember('assets:stylesheets'))
     .pipe(sourcemaps.write('.'))
     .pipe(rename('stylesheet.min.css'))
-    .pipe(gulp.dest('public/assets/stylesheets/'))
+    .pipe(gulp.dest(stylesheetsDist))
     .pipe(livereload());
 });
 
-gulp.task('js', function() {
-  return gulp.src('assets/javascripts/**/*')
+gulp.task('assets:javascripts', function() {
+  return gulp.src(javascriptsSrc)
     .pipe(plumber({ errorHandler: handleErrors }))
     .pipe(sourcemaps.init())
-    .pipe(cached('js'))
+    .pipe(cached('assets:javascripts'))
     .pipe(babel())
-    .pipe(remember('scripts'))
+    .pipe(remember('assets:javascripts'))
     .pipe(concat('javascript.js'))
     .pipe(uglify())
     .pipe(sourcemaps.write('.'))
     .pipe(rename('javascript.min.js'))
-    .pipe(gulp.dest('public/assets/javascripts/'));
+    .pipe(gulp.dest(javascriptsDist))
+    .pipe(livereload());
 });
 
-gulp.task('watch', function() {
+gulp.task('assets:build', [
+  'assets:stylesheets',
+  'assets:javascripts',
+]);
+
+gulp.task('assets:watch', function() {
+  gulp.watch([stylesheetsSrc], ['assets:stylesheets']);
+  gulp.watch([javascriptsSrc], ['assets:javascripts']);
+});
+
+/* ----------------------------------------------------------------------------
+ * Server
+ * ------------------------------------------------------------------------- */
+
+gulp.task('server:build', function() {
+  var build = child.spawnSync('go', ['install']);
+
+  // Log build errors
+  if (build.stderr.length) {
+    var lines = build.stderr
+      .toString()
+      .split('\n')
+      .filter(function(line) {
+        return line.length;
+      });
+
+    for (var l in lines) {
+      gutil.log(
+        gutil.colors.red('Error (go install): ' + lines[l])
+      );
+    }
+
+    notify.notify({
+      title: 'Error (go install)',
+      message: lines
+    });
+  }
+
+  return build;
+});
+
+gulp.task('server:spawn', function() {
+  if (server) {
+    server.kill();
+  }
+
+  server = child.spawn('go', ['run', 'breizhtrip.go', 'server', '-p', '5000']);
+
+  server.stdout.once('data', function() {
+    livereload.reload('/');
+  });
+
+  // Log server log
+  server.stdout.on('data', function(data) {
+    var lines = data.toString().split('\n');
+    for (var l in lines) {
+      if (lines[l].length) {
+        gutil.log(lines[l]);
+      }
+    }
+  });
+
+  // Log errors
+  server.stderr.on('data', function(data) {
+    process.stdout.write(data.toString());
+  });
+});
+
+gulp.task('server:watch', function() {
+  gulp.watch([viewSrc], ['server:spawn']);
+  gulp.watch('*/**/*.go', sync.sync([
+    'server:build',
+    'server:spawn'
+  ]));
+});
+
+
+/* ----------------------------------------------------------------------------
+ * Interface
+ * ------------------------------------------------------------------------- */
+
+gulp.task('build', [
+  'assets:build',
+  'server:build'
+]);
+
+gulp.task('watch', ['build'], function() {
   livereload.listen();
-  gulp.watch('assets/stylesheets/**/*', ['sass']);
-  gulp.watch('assets/javascripts/**/*', ['js']);
-  gutil.log('Watching all .scss and js files...');
+  return gulp.start([
+    'assets:watch',
+    'server:watch',
+    'server:spawn'
+  ]);
 });
-
-gulp.task('default', ['sass', 'js']);
 
 /* eslint-enable quotes */
