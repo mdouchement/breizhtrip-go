@@ -1,5 +1,4 @@
 // 1. Initial variables
-
 // Colors
 $black: #111 !default;
 $grey-darker: #222324 !default;
@@ -17,7 +16,7 @@ $turquoise: #1fc8db !default;
 $yellow: #fce473 !default;
 
 // Typography
-$family-sans-serif: 'Open Sans', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif !default;
+$family-sans-serif: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif !default;
 $family-monospace: 'Source Code Pro', 'Monaco', 'Inconsolata', monospace !default;
 
 // 2. Primary colors
@@ -31,7 +30,6 @@ $dark: $grey-dark !default;
 $text: $grey-dark !default;
 
 // 3. Generated variables
-
 // General colors
 $body-background: $grey-lighter !default;
 $background: $grey-lighter !default;

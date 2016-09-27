@@ -1,0 +1,23 @@
+body {
+  font-family: $body-font-family;
+  font-size: $font-size-regular;
+
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $title-font-family;
+}
+
+h1 {
+  font-size: $font-size-xx-large;
+}

@@ -1,6 +1,8 @@
 @charset 'utf-8';
+@import 'bulma';
+@import 'settings';
+@import 'base/variables';
+@import 'base/base';
 @import 'base/fonts';
 @import 'layout/header';
 @import 'layout/footer';
-@import 'bulma';
-@import 'settings';
