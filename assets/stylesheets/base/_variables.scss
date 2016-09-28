@@ -1,6 +1,7 @@
 $font-text: 'Open Sans';
 $font-title: 'Roboto';
-$body-font-family: $font-text, 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', 'Oxygen', 'Ubuntu', 'Cantarell', Helvetica, Arial, sans-serif;
+$body-font-family: $font-text, $font-family;
 $title-font-family: $font-title, 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
 $font-size-x-small: 0.66em;
 $font-size-small: 1em;
