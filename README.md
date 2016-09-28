@@ -4,7 +4,7 @@ Carte interactive pour découvrir le patrimoine breton recensé
 
 Interactive map to discover breton heritage
 
-![Desc](https://github.com/mdouchement/breizhtrip-go/blob/master/screencapture.png)
+![Desc](screencapture.png)
 
 
 ## Requirements
@@ -64,10 +64,12 @@ Install dependencies
 $ npm install
 ```
 
-Watch assets. Automatic page refresh on change.
+Main Gulp tasks. More commands in [Gulpfile comments](gulpfile.js).
 
 ```bash
-$ gulp watch
+$ gulp watch # Watch assets, views and go files
+$ gulp build # Build assets and server
+$ gulp assets:[task] --dev # Add sourcemaps and livereload refresh
 ```
 
 ## License

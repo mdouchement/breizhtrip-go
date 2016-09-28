@@ -5,7 +5,6 @@
 * gulpfile.js
 *
 * Available tasks:
-*   `gulp`
 *   `gulp watch`
 *   `gulp build`
 *   `gulp assets:watch`
