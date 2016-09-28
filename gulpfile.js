@@ -21,6 +21,9 @@
 *   `gulp server:spawn`
 *   `gulp server:watch`
 *
+*    Options:
+*    --dev                     : Add sourcemaps, refresh livereload
+*
 * Modules:
 *   gulp                       : The streaming build system.
 *   del                        : Delete files and folders.
@@ -53,6 +56,7 @@ var gulp     = require('gulp'),
   scsslint   = require('gulp-scss-lint'),
   csscomb    = require('gulp-csscomb'),
   plumber    = require('gulp-plumber'),
+  gulpif     = require('gulp-if'),
   eslint     = require('gulp-eslint'),
   notify     = require('gulp-notify'),
   concat     = require('gulp-concat'),
@@ -63,6 +67,7 @@ var gulp     = require('gulp'),
   child      = require('child_process'),
   sync       = require('gulp-sync')(gulp),
   sass       = require('gulp-sass'),
+  args       = require('yargs').argv,
   del        = require('del');
 
 /* ----------------------------------------------------------------------------
@@ -137,16 +142,16 @@ function handleErrors() {
 gulp.task('assets:stylesheets', function() {
   return gulp.src(root.src + css.src + css.main)
     .pipe(plumber({ errorHandler: handleErrors }))
-    .pipe(sourcemaps.init())
+    .pipe(gulpif(args.dev, sourcemaps.init()))
     .pipe(csscomb())
     .pipe(scsslint())
     .pipe(sass({ includePaths: css.include }))
     .pipe(autoprefix({ browsers: ['last 2 versions'] }))
     .pipe(cleancss())
     .pipe(rename('stylesheet.min.css'))
-    .pipe(sourcemaps.write())
+    .pipe(gulpif(args.dev, sourcemaps.write()))
     .pipe(gulp.dest(root.dest + css.dest))
-    .pipe(livereload());
+    .pipe(gulpif(args.dev, livereload()));
 });
 
 gulp.task('assets:stylesheets:beautify', function() {
@@ -170,16 +175,16 @@ gulp.task('assets:stylesheets:clean', function() {
 gulp.task('assets:javascripts', function() {
   return gulp.src(root.src + js.src + js.watch)
     .pipe(plumber({ errorHandler: handleErrors }))
-    .pipe(sourcemaps.init())
+    .pipe(gulpif(args.dev, sourcemaps.init()))
     .pipe(prettify())
     .pipe(eslint())
     .pipe(babel())
-    .pipe(concat())
+    .pipe(concat('javascript.js'))
     .pipe(uglify())
     .pipe(rename('javascript.min.js'))
-    .pipe(sourcemaps.write())
+    .pipe(gulpif(args.dev, sourcemaps.write()))
     .pipe(gulp.dest(root.dest + js.dest))
-    .pipe(livereload());
+    .pipe(gulpif(args.dev, livereload()));
 });
 
 gulp.task('assets:javascripts:beautify', function() {
