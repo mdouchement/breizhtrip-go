@@ -10,10 +10,10 @@
 *   `gulp assets:clean`
 *   `gulp assets:build`
 *   `gulp assets:stylesheets`
-*   `gulp assets:stylesheets:beautify`
+*   `gulp assets:stylesheets:format`
 *   `gulp assets:stylesheets:clean`
 *   `gulp assets:javascripts`
-*   `gulp assets:javascripts:beautify`
+*   `gulp assets:javascripts:format`
 *   `gulp assets:javascripts:clean`
 *   `gulp server:build`
 *   `gulp server:spawn`
@@ -24,20 +24,25 @@
 *
 * Modules:
 *   gulp                       : The streaming build system.
+*   args                       : Add arguments support.
 *   child_process              : Spawn child process through Node.
 *   del                        : Delete files and folders.
 *   gulp-autoprefixer          : Prefix CSS.
 *   gulp-babel                 : Transpile ES6+ js files.
 *   gulp-cleancss              : Minify CSS with clean-css.
 *   gulp-concat                : Concatenates files.
-*   gulp-csscomb               : Format and sort SCSS/CSS files with CSScomb
-*   gulp-jsbeautifier          : Prettify JavaScript, JSON, HTML and CSS.
-*   gulp-livereload            : Reload web browser on demand
+*   gulp-csscomb               : Format and sort SCSS/CSS files with CSScomb.
+*   gulp-if                    : Conditionally run a task.
+*   gulp-livereload            : Reload web browser on demand.
 *   gulp-notify                : Notify system.
 *   gulp-plumber               : Prevent pipe breaking caused by errors.
 *   gulp-rename                : Rename files.
 *   gulp-sass                  : Gulp plugin for sass.
 *   gulp-sourcemaps            : Source map support for Gulp.js.
+*   gulp-standard              : JS linter.
+*   gulp-standardFormat        : Format JS files using standard rules.
+*   gulp-stylefmt              : Format CSS/SCSS files using stylelint rules.
+*   gulp-stylelint             : CSS/SCSS linter.
 *   gulp-sync                  : Sync Gulp tasks.
 *   gulp-uglify                : Minify files with UglifyJS.
 *   gulp-util                  : Utility functions for gulp plugins.
@@ -62,6 +67,8 @@ var sass = require('gulp-sass')
 var sourcemaps = require('gulp-sourcemaps')
 var standard = require('gulp-standard')
 var standardFormat = require('gulp-standard-format')
+var stylefmt = require('gulp-stylefmt')
+var stylelint = require('gulp-stylelint')
 var sync = require('gulp-sync')(gulp)
 var uglify = require('gulp-uglify')
 
@@ -130,7 +137,7 @@ function handleErrors () {
 * CSS Tasks
 *
 * assets:stylesheets             : Compile/sort/lint/sourcemap/autoprefix/minify SCSS files to one CSS file.
-* assets:stylesheets:beautify    : Sort SCSS files.
+* assets:stylesheets:format    : Sort SCSS files.
 * assets:stylesheets:clean       : Remove any CSS files in stylesheet dist folder.
 */
 
@@ -139,7 +146,8 @@ gulp.task('assets:stylesheets', function () {
     .pipe(plumber({ errorHandler: handleErrors }))
     .pipe(gulpif(args.dev, sourcemaps.init()))
     .pipe(csscomb())
-    .pipe(scsslint())
+    .pipe(stylefmt())
+    .pipe(stylelint({ reporters: [{ formatter: 'string', console: true }] }))
     .pipe(sass({ includePaths: css.include }))
     .pipe(autoprefix({ browsers: ['last 2 versions'] }))
     .pipe(cleancss())
@@ -149,10 +157,12 @@ gulp.task('assets:stylesheets', function () {
     .pipe(gulpif(args.dev, livereload()))
 })
 
-gulp.task('assets:stylesheets:beautify', function () {
-  return gulp.src(root.src + css.src + css.watch)
+gulp.task('assets:stylesheets:format', function () {
+  return gulp.src(['!' + root.src + css.src + css.main, root.src + css.src + css.watch])
    .pipe(plumber({ errorHandler: handleErrors }))
    .pipe(csscomb())
+   .pipe(stylefmt())
+   .pipe(stylelint({ reporters: [{ formatter: 'string', console: true }] }))
    .pipe(gulp.dest(root.src + css.src))
 })
 
@@ -163,8 +173,8 @@ gulp.task('assets:stylesheets:clean', function () {
 /**
 * JS Tasks
 *
-* assets:javascripts             : Compile/beautify/lint/sourcemap/concat/minify JS files to one JS file.
-* assets:javascripts:beautify    : Beautify JS files.
+* assets:javascripts             : Compile/format/lint/sourcemap/concat/minify JS files to one JS file.
+* assets:javascripts:format      : Format JS files.
 * assets:javascripts:clean       : Remove any JS files in javascript dist folder.
 */
 gulp.task('assets:javascripts', function () {
@@ -182,7 +192,7 @@ gulp.task('assets:javascripts', function () {
     .pipe(gulpif(args.dev, livereload()))
 })
 
-gulp.task('assets:javascripts:beautify', function () {
+gulp.task('assets:javascripts:format', function () {
   return gulp.src(root.src + js.src + js.watch)
    .pipe(plumber({ errorHandler: handleErrors }))
    .pipe(standardFormat())
@@ -199,7 +209,7 @@ gulp.task('assets:javascripts:clean', function () {
  *
  * assets:watch                   : Watch SCSS and JS files for changes and compile them.
  * assets:clean                   : Remove any files in CSS/JS dist folders.
- * assets:build                   : Clean/beautify/compile CSS/JS files.
+ * assets:build                   : Clean/format/compile CSS/JS files.
  */
 
 gulp.task('assets:watch', function () {
@@ -214,9 +224,9 @@ gulp.task('assets:clean', [
 
 gulp.task('assets:build', [
   'assets:clean',
-  'assets:stylesheets:beautify',
+  'assets:stylesheets:format',
   'assets:stylesheets',
-  'assets:javascripts:beautify',
+  'assets:javascripts:format',
   'assets:javascripts'
 ])
 
