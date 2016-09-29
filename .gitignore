@@ -17,6 +17,3 @@ final.tsv
 
 # Front
 node_modules
-
-# Config files
-.ruby-version
