@@ -19,3 +19,14 @@ h6 {
 h1 {
   font-size: $font-size-xx-large;
 }
+
+main {
+  margin: 0;
+}
+
+aside {
+  position: absolute;
+  z-index: 999;
+  width: 25%;
+  height: auto;
+}

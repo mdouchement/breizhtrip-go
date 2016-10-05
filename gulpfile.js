@@ -146,7 +146,6 @@ function handleErrors () {
 
 gulp.task('assets:stylesheets', function () {
   return gulp.src([
-    '!' + (root.src + css.src + css.main + '~'),
     root.src + css.src + css.main
   ])
     .pipe(plumber({ errorHandler: handleErrors }))
@@ -293,7 +292,7 @@ gulp.task('server:spawn', function () {
 })
 
 gulp.task('server:watch', function () {
-  gulp.watch([views.src + views.watch], ['server:spawn'])
+  gulp.watch([views.src + views.all], ['server:spawn'])
   gulp.watch(go.src, sync.sync([
     'server:build',
     'server:spawn'
