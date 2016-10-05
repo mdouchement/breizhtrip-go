@@ -1,10 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>{{.title}}</title>
+    <link rel="stylesheet" href="/public/assets/stylesheets/stylesheet.min.css" media="screen" title="no title">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
   </head>
 
   <body>
-    <p>Only opened between 12 pm and 12:05 pm</p>
+    <main>
+      <aside>
+        <form class="search" action="" method="get">
+          <p class="control">
+            <label for="name" class="label">Type of heritage
+              <input class="input" type="text" name="name" value="" placeholder="Moulin"></input>
+            </label>
+          </p>
+          <p class="control">
+            <label for="commune" class="label">Commune
+              <input class="input" type="text" name="commune" value="" placeholder="Lannion"></input>
+            </label>
+          </p>
+        </form>
+      </aside>
+      <div id="map" class="map">
+      </div>
+  </main>
   </body>
+
+  <footer>
+    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+    <script src="/public/assets/javascripts/javascript.min.js"></script>
+  </footer>
 </html>

@@ -1,9 +1,10 @@
 # BreizhTrip
 
 Carte interactive pour découvrir le patrimoine breton recensé
-Interactive map to discover listed breton heritage
 
-![Desc](https://github.com/mdouchement/breizhtrip/blob/master/screencapture.png)
+Interactive map to discover breton heritage
+
+![Desc](screencapture.png)
 
 
 ## Requirements
@@ -30,6 +31,7 @@ $ find . -name '*.go' -not -path './vendor*' -exec go fmt {} \;
 
 > Environment variables https://github.com/mdouchement/breizhtrip-go/blob/master/config/config.go
 
+
 ## Import data to database
 
 ```bash
@@ -50,6 +52,25 @@ The TSV must include these columns header:
 - phase
 - photos
 - description
+
+
+## Development
+
+- **Front-end**
+
+Install dependencies
+
+```bash
+$ npm install
+```
+
+Main Gulp tasks. More commands in [Gulpfile comments](gulpfile.js).
+
+```bash
+$ gulp watch # Watch assets, views and go files
+$ gulp build # Build assets and server
+$ gulp assets:[task] --dev # Add sourcemaps and livereload refresh
+```
 
 ## License
 
