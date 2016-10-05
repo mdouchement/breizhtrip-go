@@ -30,6 +30,27 @@ $ find . -name '*.go' -not -path './vendor*' -exec go fmt {} \;
 
 > Environment variables https://github.com/mdouchement/breizhtrip-go/blob/master/config/config.go
 
+## Import data to database
+
+```bash
+$ go run breizhtrip.go import -i /path/to/your/file.csv
+```
+
+The TSV must include these columns header:
+- longitude
+- latitude
+- addresses
+- commune
+- lieu_dit
+- datings
+- status
+- study
+- studied_at
+- names
+- phase
+- photos
+- description
+
 ## License
 
 MIT. See the [LICENSE](https://github.com/mdouchement/breizhtrip-go/blob/master/LICENSE) for more details.

@@ -52,8 +52,7 @@ func GinEngine() *gin.Engine {
 	router.Static("/public", "public")
 	router.GET("/", controllers.IndexHome)
 	router.GET("/version", controllers.ShowVersion)
-	// middlewares.CRUD(router, "/system_informations", controllers.NewSystemInformations())
-	// middlewares.CRUD(router, "/licenses", controllers.NewLicenses())
+	middlewares.CRUD(router, "/heritages", controllers.NewHeritages())
 
 	return engine
 }
