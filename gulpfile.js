@@ -96,7 +96,10 @@ var css = {
 var js = {
   src: 'javascripts/',
   dest: 'javascripts/',
-  watch: '**/*'
+  watch: '**/*',
+  ignore: [
+    '*/**~'
+  ]
 }
 
 var views = {
@@ -142,7 +145,10 @@ function handleErrors () {
 */
 
 gulp.task('assets:stylesheets', function () {
-  return gulp.src(root.src + css.src + css.main)
+  return gulp.src([
+      '!' + (root.src + css.src + css.main + '~'),
+      root.src + css.src + css.main
+    ])
     .pipe(plumber({ errorHandler: handleErrors }))
     .pipe(gulpif(args.dev, sourcemaps.init()))
     .pipe(csscomb())
@@ -158,7 +164,11 @@ gulp.task('assets:stylesheets', function () {
 })
 
 gulp.task('assets:stylesheets:format', function () {
-  return gulp.src(['!' + root.src + css.src + css.main, root.src + css.src + css.watch])
+  return gulp.src([
+      '!' + root.src + css.src + css.main,
+      '!' + root.src + css.src + css.watch + '~',
+      root.src + css.src + css.watch
+    ])
    .pipe(plumber({ errorHandler: handleErrors }))
    .pipe(csscomb())
    .pipe(stylefmt())
@@ -178,7 +188,10 @@ gulp.task('assets:stylesheets:clean', function () {
 * assets:javascripts:clean       : Remove any JS files in javascript dist folder.
 */
 gulp.task('assets:javascripts', function () {
-  return gulp.src(root.src + js.src + js.watch)
+  return gulp.src([
+      '!' + root.src + js.src + js.watch + '~',
+      root.src + js.src + js.watch
+    ])
     .pipe(plumber({ errorHandler: handleErrors }))
     .pipe(gulpif(args.dev, sourcemaps.init()))
     .pipe(standardFormat())
