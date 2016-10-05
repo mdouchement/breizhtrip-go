@@ -87,7 +87,7 @@ var css = {
   src: 'stylesheets/',
   dest: 'stylesheets/',
   main: 'main.scss',
-  watch: '**/*',
+  all: '**/*',
   include: [
     './node_modules/bulma'
   ]
@@ -96,19 +96,19 @@ var css = {
 var js = {
   src: 'javascripts/',
   dest: 'javascripts/',
-  watch: '**/*',
+  all: '**/*',
   ignore: [
-    '*/**~'
+    '**/*~'
   ]
 }
 
 var views = {
   src: 'views/',
-  watch: '**/*.tmpl'
+  all: '**/*.tmpl'
 }
 
 var go = {
-  src: '*/**/*.go'
+  src: '**/*.go'
 }
 
 /* ----------------------------------------------------------------------------
@@ -146,9 +146,9 @@ function handleErrors () {
 
 gulp.task('assets:stylesheets', function () {
   return gulp.src([
-      '!' + (root.src + css.src + css.main + '~'),
-      root.src + css.src + css.main
-    ])
+    '!' + (root.src + css.src + css.main + '~'),
+    root.src + css.src + css.main
+  ])
     .pipe(plumber({ errorHandler: handleErrors }))
     .pipe(gulpif(args.dev, sourcemaps.init()))
     .pipe(csscomb())
@@ -165,10 +165,10 @@ gulp.task('assets:stylesheets', function () {
 
 gulp.task('assets:stylesheets:format', function () {
   return gulp.src([
-      '!' + root.src + css.src + css.main,
-      '!' + root.src + css.src + css.watch + '~',
-      root.src + css.src + css.watch
-    ])
+    '!' + root.src + css.src + css.main,
+    '!' + root.src + css.src + css.all + '~',
+    root.src + css.src + css.all
+  ])
    .pipe(plumber({ errorHandler: handleErrors }))
    .pipe(csscomb())
    .pipe(stylefmt())
@@ -177,7 +177,7 @@ gulp.task('assets:stylesheets:format', function () {
 })
 
 gulp.task('assets:stylesheets:clean', function () {
-  return del([root.dest + css.dest])
+  return del([root.dest + css.dest + css.all])
 })
 
 /**
@@ -189,9 +189,9 @@ gulp.task('assets:stylesheets:clean', function () {
 */
 gulp.task('assets:javascripts', function () {
   return gulp.src([
-      '!' + root.src + js.src + js.watch + '~',
-      root.src + js.src + js.watch
-    ])
+    '!' + root.src + js.src + js.all + '~',
+    root.src + js.src + js.all
+  ])
     .pipe(plumber({ errorHandler: handleErrors }))
     .pipe(gulpif(args.dev, sourcemaps.init()))
     .pipe(standardFormat())
@@ -206,7 +206,7 @@ gulp.task('assets:javascripts', function () {
 })
 
 gulp.task('assets:javascripts:format', function () {
-  return gulp.src(root.src + js.src + js.watch)
+  return gulp.src(root.src + js.src + js.all)
    .pipe(plumber({ errorHandler: handleErrors }))
    .pipe(standardFormat())
    .pipe(standard())
@@ -214,20 +214,20 @@ gulp.task('assets:javascripts:format', function () {
 })
 
 gulp.task('assets:javascripts:clean', function () {
-  return del([root.dest + js.dest])
+  return del([root.dest + js.dest + js.all])
 })
 
 /**
  * Global assets tasks
  *
- * assets:watch                   : Watch SCSS and JS files for changes and compile them.
+ * assets:watch                   : watch SCSS and JS files for changes and compile them.
  * assets:clean                   : Remove any files in CSS/JS dist folders.
  * assets:build                   : Clean/format/compile CSS/JS files.
  */
 
 gulp.task('assets:watch', function () {
-  gulp.watch([root.src + css.src + css.watch], ['assets:stylesheets'])
-  gulp.watch([root.src + js.src + js.watch], ['assets:javascripts'])
+  gulp.watch([root.src + css.src + css.all], ['assets:stylesheets'])
+  gulp.watch([root.src + js.src + js.all], ['assets:javascripts'])
 })
 
 gulp.task('assets:clean', [
