@@ -26,10 +26,14 @@ func init() {
 }
 
 func main() {
+	if err := models.CreateDatabase(); err != nil {
+		fmt.Println(err)
+		return
+	}
 	config.InitDB()
 	models.AutoMigration()
-	err := app.Run(os.Args)
-	if err != nil {
+
+	if err := app.Run(os.Args); err != nil {
 		fmt.Println(err)
 	}
 }
