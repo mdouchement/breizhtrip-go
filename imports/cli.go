@@ -42,7 +42,7 @@ func action(context *cli.Context) error {
 	}
 
 	r := csv.NewReader(bufio.NewReader(f))
-	r.Comma = '\t'
+	r.Comma = ','
 
 	header := make(map[string]int)
 
@@ -65,15 +65,17 @@ func action(context *cli.Context) error {
 			h := models.NewHeritage()
 			h.Longitude, _ = strconv.ParseFloat(record[header["longitude"]], 64) // ignore error
 			h.Latitude, _ = strconv.ParseFloat(record[header["latitude"]], 64)   // ignore error
-			h.Address = record[header["adresse"]]
+			h.Addresses = models.NewStringSlice(splitFlatArray(record[header["adresses"]])...)
 			h.Commune = record[header["commune"]]
 			h.LieuDit = record[header["lieu_dit"]]
-			h.Datings = models.NewStringSlice(record[header["datations_principales"]], record[header["datations_secondaires"]])
-			h.Status = record[header["statut"]]
-			h.Study = record[header["cadre_etude"]]
-			h.StudyAt = record[header["date_enquete"]]
-			h.Names = models.NewStringSlice(splitNames(record[header["denomination"]])...)
+			h.Datings = models.NewStringSlice(record[header["datings"]])
+			h.Status = record[header["status"]]
+			h.Study = record[header["study"]]
+			h.StudiedAt = record[header["studied_at"]]
+			h.Names = models.NewStringSlice(splitFlatArray(record[header["names"]])...)
 			h.Phase = record[header["phase"]]
+			h.Description = record[header["description"]]
+			h.Photos = models.NewStringSlice(splitFlatArray(record[header["photos"]])...)
 
 			if err := config.DB.Create(h).Error; err != nil {
 				return err
@@ -83,8 +85,8 @@ func action(context *cli.Context) error {
 	return nil
 }
 
-func splitNames(s string) []string {
-	names := strings.Split(s, ";")
+func splitFlatArray(s string) []string {
+	names := strings.Split(s, "|")
 	for i, name := range names {
 		names[i] = strings.Trim(name, " ")
 	}

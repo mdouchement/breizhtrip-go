@@ -33,22 +33,23 @@ $ find . -name '*.go' -not -path './vendor*' -exec go fmt {} \;
 ## Import data to database
 
 ```bash
-$ go run breizhtrip.go import -i /path/to/your/file.tsv
+$ go run breizhtrip.go import -i /path/to/your/file.csv
 ```
 
 The TSV must include these columns header:
-* longitude
-* latitude
-* adresse
-* commune
-* lieu_dit
-* datations_principales
-* datations_secondaires
-* statut
-* cadre_etude
-* date_enquete
-* denomination
-* phase
+- longitude
+- latitude
+- addresses
+- commune
+- lieu_dit
+- datings
+- status
+- study
+- studied_at
+- names
+- phase
+- photos
+- description
 
 ## License
 

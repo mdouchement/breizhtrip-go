@@ -11,22 +11,24 @@ import (
 
 // An Heritage is a database record.
 type Heritage struct {
-	ID        string     `gorm:"primary_key;type:uuid" json:"id"`
+	ID        string     `json:"id" gorm:"primary_key;type:uuid"`
 	CreatedAt *time.Time `json:"created_at"`
 	UpdatedAt *time.Time `json:"updated_at"`
 
 	Longitude float64      `json:"longitude" gorm:"index"`
 	Latitude  float64      `json:"latitude" gorm:"index"`
-	Address   string       `json:"address" gorm:"index"`
+	Addresses *StringSlice `json:"addresses" gorm:"index;type:jsonb"`
 	Commune   string       `json:"commune" gorm:"index"`
 	LieuDit   string       `json:"lieu_dit" gorm:"index"`
 	Datings   *StringSlice `json:"datings" gorm:"index;type:jsonb"`
 
-	Status  string       `json:"status"`
-	Study   string       `json:"study"`
-	StudyAt string       `json:"study_at"`
-	Names   *StringSlice `json:"names" gorm:"type:jsonb"`
-	Phase   string       `json:"phase"`
+	Photos      *StringSlice `json:"photos" gorm:"type:jsonb"`
+	Status      string       `json:"status"`
+	Study       string       `json:"study"`
+	StudiedAt   string       `json:"studied_at"`
+	Names       *StringSlice `json:"names" gorm:"type:jsonb"`
+	Phase       string       `json:"phase"`
+	Description string       `json:"description"`
 }
 
 // NewHeritage returns new Heritage with a default id.
