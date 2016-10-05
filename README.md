@@ -32,12 +32,6 @@ $ find . -name '*.go' -not -path './vendor*' -exec go fmt {} \;
 
 ## Import data to database
 
-You need to have a database name:
-* "breizhtrip_development" or
-* "reizhtrip_production" or
-* "breizhtrip_test"
-
-
 ```bash
 $ go run breizhtrip.go import -i /path/to/your/file.tsv
 ```
