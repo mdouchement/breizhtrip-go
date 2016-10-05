@@ -1,7 +1,7 @@
 body {
   font-family: $body-font-family;
   font-size: $font-size-regular;
-  width: 100%;
+  width: 100vw;
   height: auto;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
@@ -29,4 +29,8 @@ aside {
   z-index: 999;
   width: 25%;
   height: auto;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
