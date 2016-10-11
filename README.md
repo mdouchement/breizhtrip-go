@@ -7,6 +7,10 @@ Interactive map to discover breton heritage
 ![Desc](screencapture.png)
 
 
+## Project
+[Roadmap & TODO](https://github.com/mdouchement/breizhtrip-go/projects/1)
+
+
 ## Requirements
 
 - Golang 1.6.x
