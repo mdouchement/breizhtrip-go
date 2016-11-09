@@ -3,7 +3,8 @@ package web
 import (
 	"fmt"
 
-	"github.com/gin-gonic/gin"
+	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 	"github.com/mdouchement/breizhtrip-go/config"
 	"github.com/mdouchement/breizhtrip-go/controllers"
 	"github.com/mdouchement/breizhtrip-go/web/middlewares"
@@ -25,29 +26,29 @@ var serverFlags = []cli.Flag{
 	},
 	&cli.StringFlag{
 		Name:  "b, binding",
-		Usage: "Binds Gin to the specified IP.",
+		Usage: "Binds server to the specified IP.",
 	},
 }
 
 func serverAction(context *cli.Context) error {
-	engine := GinEngine()
+	engine := EchoEngine()
+	printRoutes(engine)
 
 	listen := fmt.Sprintf("%s:%s", context.String("b"), context.String("p"))
 	config.Log.Infof("Server listening on %s", listen)
-	engine.Run(listen)
+	engine.Start(listen)
 
 	return nil
 }
 
-func GinEngine() *gin.Engine {
-	engine := gin.New()
-	engine.Use(gin.Recovery())
-	engine.Use(middlewares.DefaultGinrus())
-	engine.Use(middlewares.ParamsConverter())
+func EchoEngine() *echo.Echo {
+	engine := echo.New()
+	engine.Use(middleware.Recover())
+	engine.Use(middlewares.DefaultEchorus())
 
-	engine.LoadHTMLGlob("views/*")
+	engine.Renderer = templates // views
 
-	router := engine.Group("/")
+	router := engine.Group("") // TODO add namespace handler (e.g. /breizhtrip/version)
 
 	router.Static("/public", "public")
 	router.GET("/", controllers.IndexHome)
@@ -55,4 +56,11 @@ func GinEngine() *gin.Engine {
 	middlewares.CRUD(router, "/heritages", controllers.NewHeritages())
 
 	return engine
+}
+
+func printRoutes(e *echo.Echo) {
+	fmt.Println("Routes:")
+	for _, route := range e.Routes() {
+		fmt.Printf("%6s %s\n", route.Method, route.Path)
+	}
 }

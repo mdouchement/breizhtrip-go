@@ -3,7 +3,6 @@ package config
 import (
 	"bytes"
 
-	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -26,7 +25,7 @@ func InitDB() {
 	url.WriteString(DatabaseName())
 	url.WriteString("?sslmode=disable") // FIXME
 
-	if gin.Mode() != gin.ReleaseMode {
+	if Env() != Production {
 		Log.Info("database:", url.String())
 	}
 
@@ -49,10 +48,10 @@ func InitDB() {
 }
 
 func DatabaseName() string {
-	switch gin.Mode() {
-	case gin.ReleaseMode:
+	switch Env() {
+	case Production:
 		return "breizhtrip_production"
-	case gin.TestMode:
+	case Test:
 		return "breizhtrip_test"
 	default:
 		return "breizhtrip_development"
