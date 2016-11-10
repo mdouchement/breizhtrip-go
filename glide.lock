@@ -1,55 +1,79 @@
-hash: 0d7c18f0945fd02ffc8faed788ff288bd6185cd59de7f0e84711950733da8bd7
-updated: 2016-09-21T21:25:43.689203653+02:00
+hash: 08fb70860b05a58da95f8fc8b9973e874bcbcdb4ba72281e267ef2dee71ba257
+updated: 2016-10-18T18:44:52.694349381+02:00
 imports:
 - name: github.com/caarlos0/env
   version: 65331f179c42e3ffe33457b69bee55472a779cd6
-- name: github.com/gin-gonic/gin
-  version: 542be2fe77724f800fcab7eb6c01a4e597fb8506
-  subpackages:
-  - binding
-  - render
-- name: github.com/golang/protobuf
-  version: 2402d76f3d41f928c7902a765dfc872356dd3aad
-  subpackages:
-  - proto
+- name: github.com/dgrijalva/jwt-go
+  version: 24c63f56522a87ec5339cc3567883f1039378fdb
 - name: github.com/jinzhu/gorm
-  version: 041cd3dd31a68a3e9ad20fcddb46085df5aebc76
+  version: 39165d498058a823126af3cbf4d2a3b0e1acf11e
   subpackages:
   - dialects/postgres
 - name: github.com/jinzhu/inflection
   version: 74387dc39a75e970e7a3ae6a3386b5bd2e5c5cff
-- name: github.com/julienschmidt/httprouter
-  version: b428fda53bb0a764fea9c76c9413512eda291dec
+- name: github.com/labstack/echo
+  version: a96c564fc34b3fcbc5a1a67eeb9402243cdac6b2
+  subpackages:
+  - middleware
+- name: github.com/labstack/gommon
+  version: 2d272df536d051e737aea353b86c979d6e88bce0
+  subpackages:
+  - bytes
+  - color
+  - log
+  - random
 - name: github.com/lib/pq
-  version: 50761b0867bd1d9d069276790bcd4a3bccf2324a
+  version: ae8357db35d721c58dcdc911318b55bef6b1b001
   subpackages:
   - hstore
   - oid
-- name: github.com/manucorporat/sse
-  version: ee05b128a739a0fb76c7ebd3ae4810c1de808d6d
 - name: github.com/mattn/go-colorable
   version: 9056b7a9f2d1f2d96498d6d146acd1f9d5ed3d59
 - name: github.com/mattn/go-isatty
   version: 56b76bdf51f7708750eac80fa38b952bb9f32639
 - name: github.com/mgutz/ansi
   version: c286dcecd19ff979eeb73ea444e479b903f2cfcb
+- name: github.com/miekg/dns
+  version: 58f52c57ce9df13460ac68200cef30a008b9c468
+- name: github.com/rsc/letsencrypt
+  version: 76104d26167d38b6a0010f42bfc8ec5487742e8b
 - name: github.com/satori/go.uuid
   version: 0aa62d5ddceb50dbcb909d790b5345affd3669b6
 - name: github.com/Sirupsen/logrus
   version: 4b6ea7319e214d98c938f12692336f7ca9348d6b
+- name: github.com/tylerb/graceful
+  version: 50a48b6e73fcc75b45e22c05b79629a67c79e938
+- name: github.com/valyala/fasttemplate
+  version: 3b874956e03f1636d171bda64b130f9135f42cff
 - name: github.com/x-cray/logrus-prefixed-formatter
   version: 78e945f7d6bfe5a81ce6121d92d8118e44303e58
+- name: github.com/xenolf/lego
+  version: bb51288200705e835bdc7829f4f121f1dbffd827
+  subpackages:
+  - acme
+- name: golang.org/x/crypto
+  version: 14f9af67c679edd414f72f13d67c917447113df2
+  subpackages:
+  - ocsp
 - name: golang.org/x/net
   version: f315505cf3349909cdf013ea56690da34e96a451
   subpackages:
   - context
-  - proxy
+  - publicsuffix
+  - websocket
 - name: golang.org/x/sys
   version: a646d33e2ee3172a661fc09bca23bb4889a41bc8
   subpackages:
   - unix
-- name: gopkg.in/go-playground/validator.v8
-  version: c193cecd124b5cc722d7ee5538e945bdb3348435
+- name: golang.org/x/time
+  version: 711ca1cb87636abec28122ef3bc6a77269d433f3
+  subpackages:
+  - rate
+- name: gopkg.in/square/go-jose.v1
+  version: aa2e30fdd1fe9dd3394119af66451ae790d50e0d
+  subpackages:
+  - cipher
+  - json
 - name: gopkg.in/urfave/cli.v2
   version: ee2e8aa5b22f55f006c27fd35765c62249a39aad
 - name: gopkg.in/yaml.v2

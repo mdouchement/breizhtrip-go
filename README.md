@@ -13,7 +13,7 @@ Interactive map to discover breton heritage
 
 ## Requirements
 
-- Golang 1.6.x
+- Golang 1.7.x
 
 ## Installation
 

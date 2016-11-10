@@ -3,12 +3,12 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
+	"github.com/labstack/echo"
 )
 
 // IndexHome renders BreizhTrip home page
-func IndexHome(c *gin.Context) {
-	c.HTML(http.StatusOK, "home.index.tmpl", gin.H{
+func IndexHome(c echo.Context) error {
+	return c.Render(http.StatusOK, "home.index.tmpl", echo.Map{
 		"title": "BreizhTrip",
 	})
 }

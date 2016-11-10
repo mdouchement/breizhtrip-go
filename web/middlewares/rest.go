@@ -1,35 +1,33 @@
 package middlewares
 
-import (
-	"github.com/gin-gonic/gin"
-)
+import "github.com/labstack/echo"
 
 // All of the methods are the same type as HandlerFunc
 // if you don't want to support any methods of CRUD, then don't implement it
 
 // CreateSupported interface
 type CreateSupported interface {
-	Create(*gin.Context)
+	Create(echo.Context) error
 }
 
 // ListSupported interface
 type ListSupported interface {
-	List(*gin.Context)
+	List(echo.Context) error
 }
 
 // ShowSupported interface
 type ShowSupported interface {
-	Show(*gin.Context)
+	Show(echo.Context) error
 }
 
 // UpdateSupported interface
 type UpdateSupported interface {
-	Update(*gin.Context)
+	Update(echo.Context) error
 }
 
 // DeleteSupported interface
 type DeleteSupported interface {
-	Delete(*gin.Context)
+	Delete(echo.Context) error
 }
 
 // CRUD defines the folowwing resources:
@@ -38,7 +36,7 @@ type DeleteSupported interface {
 //   GET:    /path/:id
 //   PATCH:  /path/:id
 //   DEL:    /path/:id
-func CRUD(group *gin.RouterGroup, path string, resource interface{}) {
+func CRUD(group *echo.Group, path string, resource interface{}) {
 	if resource, ok := resource.(CreateSupported); ok {
 		group.POST(path, resource.Create)
 	}

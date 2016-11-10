@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/gin-gonic/gin"
+	"github.com/labstack/echo"
 	"github.com/mdouchement/breizhtrip-go/config"
 )
 
@@ -20,53 +20,50 @@ var (
 	reset   = string([]byte{27, 91, 48, 109})
 )
 
-func DefaultGinrus() gin.HandlerFunc {
-	return Ginrus(config.Log)
+func DefaultEchorus() echo.MiddlewareFunc {
+	return Echorus(config.Log)
 }
 
-// Ginrus combines Gin default logger with Logrus writer
-// Exported from https://github.com/gin-gonic/contrib/tree/master/ginrus
-func Ginrus(logger *logrus.Logger, notlogged ...string) gin.HandlerFunc {
-	var skip map[string]struct{}
+func Echorus(logger *logrus.Logger) echo.MiddlewareFunc {
+	return func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) (err error) {
+			req := c.Request()
+			res := c.Response()
+			start := time.Now()
+			path := req.URL.Path
 
-	if length := len(notlogged); length > 0 {
-		skip = make(map[string]struct{}, length)
+			if err = next(c); err != nil {
+				c.Error(err)
+			}
 
-		for _, path := range notlogged {
-			skip[path] = struct{}{}
-		}
-	}
-
-	return func(c *gin.Context) {
-		// Start timer
-		start := time.Now()
-		path := c.Request.URL.Path
-
-		// Process request
-		c.Next()
-
-		// Log only when path is not being skipped
-		if _, ok := skip[path]; !ok {
-			// Stop timer
 			end := time.Now()
 			latency := end.Sub(start)
 
-			clientIP := c.ClientIP()
-			method := c.Request.Method
-			statusCode := c.Writer.Status()
+			clientIP := c.RealIP()
+			method := req.Method
+			statusCode := res.Status
 			statusColor := colorForStatus(statusCode)
 			methodColor := colorForMethod(method)
-			comment := c.Errors.ByType(gin.ErrorTypePrivate).String()
+			comment := ""
 
-			params, err := json.Marshal(c.Keys)
+			keys := make(map[string]interface{}, len(c.ParamNames()))
+			for _, pname := range c.ParamNames() {
+				keys[pname] = c.Param(pname)
+			}
+			queries := c.QueryParams()
+			for qname, _ := range queries {
+				keys[qname] = queries.Get(qname)
+			}
+
+			params, err := json.Marshal(keys)
 			if err != nil {
 				params = []byte("Ignored error during parameters parsing")
 			}
-			if string(params) == "null" {
+			if len(keys) == 0 {
 				params = []byte{}
 			}
 
-			logger.Infof("[GIN] |%s %3d %s| %13v | %s |%s  %s %-7s %s %s %s",
+			logger.Infof("[Echo] |%s %3d %s| %13v | %s |%s  %s %-7s %s %s %s",
 				statusColor, statusCode, reset,
 				latency,
 				clientIP,
@@ -75,6 +72,7 @@ func Ginrus(logger *logrus.Logger, notlogged ...string) gin.HandlerFunc {
 				params,
 				comment,
 			)
+			return
 		}
 	}
 }
