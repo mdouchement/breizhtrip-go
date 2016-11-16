@@ -11,7 +11,7 @@ import:
   version: 0aa62d5ddceb50dbcb909d790b5345affd3669b6
 # Web framework
 - package: github.com/labstack/echo
-  version: a96c564fc34b3fcbc5a1a67eeb9402243cdac6b2 # v3 beta
+  version: ~3.0.1
 - package: github.com/labstack/gommon
   version: 2d272df536d051e737aea353b86c979d6e88bce0
   subpackages:
